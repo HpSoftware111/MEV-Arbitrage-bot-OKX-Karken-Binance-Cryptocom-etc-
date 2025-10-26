@@ -1,0 +1,28 @@
+# Exchange API Credentials
+# Copy this file to .env and replace with your actual API keys
+
+# Kraken API Keys  
+KRAKEN_API_KEY=your_kraken_api_key_here
+KRAKEN_API_SECRET=your_kraken_api_secret_here
+
+# Binance.US API Keys
+BINANCE_API_KEY=your_binance_us_api_key_here
+BINANCE_API_SECRET=your_binance_us_api_secret_here
+
+# OKX API Keys
+OKX_API_KEY=your_okx_api_key_here
+OKX_API_SECRET=your_okx_api_secret_here
+OKX_PASSPHRASE=your_okx_passphrase_here
+
+# Crypto.com API Keys
+CRYPTO_COM_API_KEY=your_crypto_com_api_key_here
+CRYPTO_COM_API_SECRET=your_crypto_com_api_secret_here
+
+# Bot Configuration
+TRADING_MODE=paper
+MIN_PROFIT_THRESHOLD=0.05
+MAX_TRADE_AMOUNT=1000
+MIN_VOLUME_THRESHOLD=1000
+DAILY_TRADE_LIMIT=10000
+BALANCE_UPDATE_INTERVAL=60
+DATABASE_URL=sqlite:///./mev_bot.db

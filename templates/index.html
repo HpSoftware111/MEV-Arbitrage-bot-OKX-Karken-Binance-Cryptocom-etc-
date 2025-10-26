@@ -117,6 +117,50 @@
             </div>
         </div>
 
+        <!-- Trading Controls -->
+        <div class="mb-8">
+            <h2 class="text-xl font-bold mb-4 flex items-center">
+                <i class="fas fa-trading mr-2 text-purple-500"></i>
+                Trading Controls
+            </h2>
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center space-x-4">
+                        <div class="flex items-center space-x-2">
+                            <div id="trading-status-indicator" class="w-3 h-3 rounded-full bg-red-500"></div>
+                            <span id="trading-status-text" class="text-sm text-red-400">Trading Disabled</span>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button id="enable-trading-btn" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50">
+                                <i class="fas fa-play mr-1"></i>Enable Trading
+                            </button>
+                            <button id="disable-trading-btn" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 disabled:opacity-50" disabled>
+                                <i class="fas fa-stop mr-1"></i>Disable Trading
+                            </button>
+                        </div>
+                    </div>
+                    <div class="text-sm text-gray-400">
+                        <div>Max Trade: $<span id="max-trade-amount">1000</span></div>
+                        <div>Daily Limit: $<span id="daily-trade-limit">10000</span></div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-3 gap-4 text-sm">
+                    <div>
+                        <span class="text-gray-400">Active Trades:</span>
+                        <span id="active-trades-count" class="text-white font-semibold">0</span>
+                    </div>
+                    <div>
+                        <span class="text-gray-400">Total Profit:</span>
+                        <span id="total-profit" class="text-green-400 font-semibold">$0.00</span>
+                    </div>
+                    <div>
+                        <span class="text-gray-400">Success Rate:</span>
+                        <span id="success-rate" class="text-blue-400 font-semibold">0%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Arbitrage Opportunities -->
         <div class="mb-8">
             <h2 class="text-xl font-bold mb-4 flex items-center">
@@ -139,6 +183,252 @@
             </h2>
             <div id="exchanges-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <!-- Exchange status cards will be populated here -->
+            </div>
+        </div>
+
+        <!-- Portfolio Overview -->
+        <div class="mb-8">
+            <h2 class="text-xl font-bold mb-4 flex items-center">
+                <i class="fas fa-chart-line mr-2 text-blue-500"></i>
+                Portfolio Overview
+            </h2>
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-6">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-white" id="portfolio-value">$0.00</div>
+                        <div class="text-sm text-gray-400">Total Value</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-green-400" id="total-pnl">$0.00</div>
+                        <div class="text-sm text-gray-400">Total P&L</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-blue-400" id="daily-pnl">$0.00</div>
+                        <div class="text-sm text-gray-400">Daily P&L</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-purple-400" id="win-rate">0%</div>
+                        <div class="text-sm text-gray-400">Win Rate</div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Sharpe Ratio:</span>
+                        <span id="sharpe-ratio" class="text-white">0.00</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Max Drawdown:</span>
+                        <span id="max-drawdown" class="text-red-400">0%</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Open Positions:</span>
+                        <span id="open-positions" class="text-yellow-400">0</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Last Updated:</span>
+                        <span id="portfolio-last-update" class="text-gray-300">Never</span>
+                    </div>
+                </div>
+                <div class="mt-4 flex space-x-2">
+                    <button id="create-snapshot-btn" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                        <i class="fas fa-camera mr-1"></i>Create Snapshot
+                    </button>
+                    <button id="rebalance-btn" class="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700">
+                        <i class="fas fa-balance-scale mr-1"></i>Rebalance
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Risk Management Dashboard -->
+        <div class="mb-8">
+            <h2 class="text-xl font-bold mb-4 flex items-center">
+                <i class="fas fa-shield-alt mr-2 text-red-500"></i>
+                Risk Management
+            </h2>
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-blue-400" id="risk-score">0.00</div>
+                        <div class="text-sm text-gray-400">Risk Score</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-green-400" id="current-exposure">$0.00</div>
+                        <div class="text-sm text-gray-400">Current Exposure</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-yellow-400" id="daily-pnl">$0.00</div>
+                        <div class="text-sm text-gray-400">Daily P&L</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-purple-400" id="safety-status">SAFE</div>
+                        <div class="text-sm text-gray-400">Safety Status</div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div class="bg-gray-700 rounded p-4">
+                        <h3 class="text-lg font-semibold mb-3 text-gray-300">Risk Limits</h3>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Max Exposure:</span>
+                                <span id="max-exposure" class="text-white">$1000</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Daily Loss Limit:</span>
+                                <span id="daily-loss-limit" class="text-white">$500</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Max Drawdown:</span>
+                                <span id="max-drawdown-limit" class="text-white">10%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Volatility Limit:</span>
+                                <span id="volatility-limit" class="text-white">5%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-700 rounded p-4">
+                        <h3 class="text-lg font-semibold mb-3 text-gray-300">Current Metrics</h3>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Max Drawdown:</span>
+                                <span id="current-drawdown" class="text-white">0%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Volatility:</span>
+                                <span id="current-volatility" class="text-white">0%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Correlation Risk:</span>
+                                <span id="correlation-risk" class="text-white">0%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Safety Violations:</span>
+                                <span id="safety-violations" class="text-white">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex space-x-2">
+                    <button id="safety-check-btn" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                        <i class="fas fa-check-circle mr-1"></i>Safety Check
+                    </button>
+                    <button id="emergency-stop-btn" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">
+                        <i class="fas fa-stop mr-1"></i>Emergency Stop
+                    </button>
+                    <button id="risk-events-btn" class="px-4 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700">
+                        <i class="fas fa-exclamation-triangle mr-1"></i>Risk Events
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Advanced Analytics Dashboard -->
+        <div class="mb-8">
+            <h2 class="text-xl font-bold mb-4 flex items-center">
+                <i class="fas fa-chart-line mr-2 text-purple-500"></i>
+                Advanced Analytics
+            </h2>
+            <div class="bg-gray-800 rounded-lg p-6 border border-gray-700">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-green-400" id="analytics-total-return">$0.00</div>
+                        <div class="text-sm text-gray-400">Total Return</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-blue-400" id="analytics-sharpe-ratio">0.00</div>
+                        <div class="text-sm text-gray-400">Sharpe Ratio</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-yellow-400" id="analytics-win-rate">0%</div>
+                        <div class="text-sm text-gray-400">Win Rate</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-red-400" id="analytics-max-drawdown">0%</div>
+                        <div class="text-sm text-gray-400">Max Drawdown</div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div class="bg-gray-700 rounded p-4">
+                        <h3 class="text-lg font-semibold mb-3 text-gray-300">Performance Metrics</h3>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Annualized Return:</span>
+                                <span id="analytics-annualized-return" class="text-white">0%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Volatility:</span>
+                                <span id="analytics-volatility" class="text-white">0%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Profit Factor:</span>
+                                <span id="analytics-profit-factor" class="text-white">0.00</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Sortino Ratio:</span>
+                                <span id="analytics-sortino-ratio" class="text-white">0.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-700 rounded p-4">
+                        <h3 class="text-lg font-semibold mb-3 text-gray-300">Trading Insights</h3>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Optimal Trade Size:</span>
+                                <span id="analytics-optimal-size" class="text-white">$0</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Best Hours:</span>
+                                <span id="analytics-best-hours" class="text-white">N/A</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Timing Accuracy:</span>
+                                <span id="analytics-timing-accuracy" class="text-white">0%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Risk Score:</span>
+                                <span id="analytics-risk-score" class="text-white">0/100</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex space-x-2">
+                    <button id="refresh-analytics-btn" class="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700">
+                        <i class="fas fa-sync-alt mr-1"></i>Refresh Analytics
+                    </button>
+                    <button id="export-analytics-btn" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
+                        <i class="fas fa-download mr-1"></i>Export Report
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Current Positions -->
+        <div class="mb-8">
+            <h2 class="text-xl font-bold mb-4 flex items-center">
+                <i class="fas fa-chart-bar mr-2 text-orange-500"></i>
+                Current Positions
+            </h2>
+            <div id="positions-container" class="space-y-4">
+                <div class="text-center text-gray-400 py-8">
+                    <i class="fas fa-chart-bar text-4xl mb-4"></i>
+                    <p>No open positions</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Balance Display -->
+        <div class="mt-8">
+            <h2 class="text-xl font-bold mb-4 flex items-center">
+                <i class="fas fa-wallet mr-2 text-green-500"></i>
+                Current Balances
+            </h2>
+            <div class="mb-4 text-sm text-gray-400">
+                <i class="fas fa-info-circle mr-1"></i>
+                Balances update every 60 seconds. Requires API authentication.
+            </div>
+            <div id="balances-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Balance cards will be populated here -->
             </div>
         </div>
     </main>
@@ -210,6 +500,9 @@
                     case 'opportunities':
                         this.updateOpportunities(data.data);
                         break;
+                    case 'balances':
+                        this.updateBalances(data.data);
+                        break;
                     default:
                         console.log('Unknown message type:', data.type);
                 }
@@ -244,6 +537,13 @@
                         this.updateOpportunities(opportunities);
                     }
 
+                    // Load balances
+                    const balancesResponse = await fetch('/balances');
+                    if (balancesResponse.ok) {
+                        const balances = await balancesResponse.json();
+                        this.updateBalances(balances);
+                    }
+
                     // Load stats
                     const statsResponse = await fetch('/stats');
                     if (statsResponse.ok) {
@@ -268,7 +568,7 @@
                 container.innerHTML = '';
 
                 // Define all expected exchanges
-                const allExchanges = ['kraken', 'okx', 'binance', 'cryptocom'];
+                const allExchanges = ['kraken', 'binanceus', 'okx', 'cryptocom'];
                 
                 allExchanges.forEach(exchangeName => {
                     const price = prices.find(p => p.exchange === exchangeName);
@@ -396,17 +696,175 @@
                                     <span class="text-gray-400">Sell Slippage:</span>
                                     <span class="text-orange-400">$${opp.sell_slippage ? opp.sell_slippage.toFixed(4) : 'N/A'}</span>
                                 </div>
+                                <div>
+                                    <span class="text-gray-400">Transfer Cost:</span>
+                                    <span class="text-purple-400">$${opp.transfer_cost ? opp.transfer_cost.toFixed(4) : 'N/A'}</span>
+                                </div>
+                                <div>
+                                    <span class="text-gray-400">Transfer Time:</span>
+                                    <span class="text-blue-400">${opp.transfer_time_minutes ? opp.transfer_time_minutes + ' min' : 'Instant'}</span>
+                                </div>
                             </div>
                             <div class="mt-2 pt-2 border-t border-gray-600">
                                 <div class="flex justify-between text-xs">
                                     <span class="text-gray-400">Total Costs:</span>
-                                    <span class="text-red-400">$${opp.total_fees && opp.total_slippage ? (opp.total_fees + opp.total_slippage).toFixed(4) : 'N/A'}</span>
+                                    <span class="text-red-400">$${opp.total_fees && opp.total_slippage ? (opp.total_fees + opp.total_slippage + (opp.transfer_cost || 0)).toFixed(4) : 'N/A'}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-700 rounded p-3 mb-4">
+                            <h4 class="text-sm font-semibold text-gray-300 mb-2">Trading Details</h4>
+                            <div class="grid grid-cols-2 gap-2 text-xs">
+                                <div>
+                                    <span class="text-gray-400">Available Volume:</span>
+                                    <span class="text-green-400">$${opp.available_volume ? opp.available_volume.toFixed(0) : 'N/A'}</span>
+                                </div>
+                                <div>
+                                    <span class="text-gray-400">Min Trade Size:</span>
+                                    <span>$${opp.min_trade_size ? opp.min_trade_size.toFixed(0) : 'N/A'}</span>
+                                </div>
+                                <div>
+                                    <span class="text-gray-400">Max Trade Size:</span>
+                                    <span>$${opp.max_trade_size ? opp.max_trade_size.toFixed(0) : 'N/A'}</span>
+                                </div>
+                                <div>
+                                    <span class="text-gray-400">Risk Score:</span>
+                                    <span class="${opp.risk_score < 30 ? 'text-green-400' : opp.risk_score < 60 ? 'text-yellow-400' : 'text-red-400'}">
+                                        ${opp.risk_score ? opp.risk_score.toFixed(0) : 'N/A'}/100
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-700 rounded p-3 mb-4">
+                            <h4 class="text-sm font-semibold text-gray-300 mb-2">Profit Projections</h4>
+                            <div class="grid grid-cols-2 gap-2 text-xs">
+                                <div>
+                                    <span class="text-gray-400">Small Trade:</span>
+                                    <span class="text-green-400">$${opp.small_trade_profit ? opp.small_trade_profit.toFixed(2) : 'N/A'}</span>
+                                </div>
+                                <div>
+                                    <span class="text-gray-400">Large Trade:</span>
+                                    <span class="text-green-400">$${opp.large_trade_profit ? opp.large_trade_profit.toFixed(2) : 'N/A'}</span>
+                                </div>
+                                <div>
+                                    <span class="text-gray-400">Price Spread:</span>
+                                    <span>${opp.price_spread_percentage ? opp.price_spread_percentage.toFixed(3) : 'N/A'}%</span>
+                                </div>
+                                <div>
+                                    <span class="text-gray-400">Direction:</span>
+                                    <span class="text-blue-400">${opp.direction || 'N/A'}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="flex justify-between items-center text-sm text-gray-400">
                             <span>Volume: ${opp.volume.toLocaleString()}</span>
                             <span>${new Date(opp.timestamp).toLocaleString()}</span>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-gray-600">
+                            <button onclick="executeTrade(${opp.id})" 
+                                    class="w-full px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50"
+                                    ${opp.risk_score > 80 ? 'disabled' : ''}>
+                                <i class="fas fa-play mr-2"></i>
+                                Execute Trade
+                                ${opp.risk_score > 80 ? '(High Risk)' : ''}
+                            </button>
+                        </div>
+                    `;
+                    
+                    container.appendChild(card);
+                });
+            }
+
+            updateBalances(balances) {
+                const container = document.getElementById('balances-container');
+                
+                // Only clear and rebuild if we have actual balance data
+                const hasAnyBalanceData = Object.keys(balances).length > 0 && 
+                    Object.values(balances).some(exchangeBalances => 
+                        Object.keys(exchangeBalances).length > 0
+                    );
+                
+                if (!hasAnyBalanceData) {
+                    // Don't update if no balance data - preserve existing display
+                    return;
+                }
+                
+                container.innerHTML = '';
+                const exchanges = ['kraken', 'binanceus', 'okx', 'cryptocom'];
+                
+                exchanges.forEach(exchangeName => {
+                    const card = document.createElement('div');
+                    card.className = 'bg-gray-800 rounded-lg p-6 border border-gray-700';
+                    
+                    const exchangeBalances = balances[exchangeName] || {};
+                    const hasBalances = Object.keys(exchangeBalances).length > 0;
+                    const hasNonZeroBalances = hasBalances && Object.values(exchangeBalances).some(balance => 
+                        balance && typeof balance === 'object' && balance.total > 0
+                    );
+                    const isDemo = exchangeBalances.status === 'demo';
+                    
+                    // Check if exchange is actually working by looking at recent timestamps
+                    const hasRecentData = hasBalances && Object.values(exchangeBalances).some(balance => {
+                        if (balance && balance.timestamp) {
+                            const timestamp = new Date(balance.timestamp);
+                            const now = new Date();
+                            const diffMinutes = (now - timestamp) / (1000 * 60);
+                            return diffMinutes < 10; // Data is recent if less than 10 minutes old
+                        }
+                        return false;
+                    });
+                    
+                    // Show exchange if it has any data (recent or old) OR if it's explicitly demo mode
+                    const shouldShowExchange = hasBalances || isDemo;
+                    const isAuthenticated = exchangeBalances.status === 'authenticated' || (hasBalances && hasRecentData);
+                    
+                    card.innerHTML = `
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold capitalize">${exchangeName}</h3>
+                            <div class="flex items-center space-x-2">
+                                <div class="w-2 h-2 rounded-full ${shouldShowExchange ? (isDemo ? 'bg-yellow-500' : (hasRecentData ? 'bg-green-500' : 'bg-orange-500')) : 'bg-red-500'}"></div>
+                                <span class="text-sm ${shouldShowExchange ? (isDemo ? 'text-yellow-400' : (hasRecentData ? 'text-green-400' : 'text-orange-400')) : 'text-red-400'}">
+                                    ${isDemo ? 'Demo Mode' : (hasRecentData ? 'Authenticated' : (hasBalances ? 'Stale Data' : 'Not Authenticated'))}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            ${shouldShowExchange ? Object.entries(exchangeBalances).map(([currency, balance]) => `
+                                <div class="flex justify-between">
+                                    <span class="text-gray-400">${currency}:</span>
+                                    <div class="text-right">
+                                        <div class="text-white font-semibold">${balance.total.toFixed(4)}</div>
+                                        <div class="text-xs text-gray-500">
+                                            Free: ${balance.free.toFixed(4)} | Used: ${balance.used.toFixed(4)}
+                                        </div>
+                                        ${currency === 'USDT' && balance.conversion_details ? `
+                                            <div class="text-xs text-blue-400 mt-1">
+                                                ${Object.entries(balance.conversion_details).map(([crypto, details]) => 
+                                                    `${details.amount.toFixed(6)} ${crypto} @ $${details.price.toFixed(2)}`
+                                                ).join(' + ')}
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                </div>
+                            `).join('') : `
+                                <div class="text-center text-gray-500 py-4">
+                                    <i class="fas fa-lock text-2xl mb-2"></i>
+                                    <p class="text-sm">API keys required</p>
+                                    ${exchangeName === 'binanceus' ? `
+                                        <div class="mt-2 text-xs text-red-400">
+                                            <p>Error: Invalid API Key</p>
+                                            <p>Check Binance.US API settings</p>
+                                        </div>
+                                    ` : ''}
+                                </div>
+                            `}
+                            ${isDemo ? `
+                                <div class="mt-2 text-center">
+                                    <span class="text-xs text-yellow-400 bg-yellow-900 px-2 py-1 rounded">
+                                        Demo Data - Add API keys for real balances
+                                    </span>
+                                </div>
+                            ` : ''}
                         </div>
                     `;
                     
@@ -420,6 +878,43 @@
                 document.getElementById('total-opportunities').textContent = stats.total_arbitrage_opportunities || 0;
                 document.getElementById('profitable-opportunities').textContent = stats.profitable_opportunities || 0;
                 document.getElementById('monitoring-status').textContent = stats.monitoring_status ? 'On' : 'Off';
+                
+                // Update trading stats
+                if (stats.trading_status) {
+                    this.updateTradingStatus(stats.trading_status);
+                }
+                
+                // Update trading metrics
+                document.getElementById('total-profit').textContent = `$${(stats.total_profit || 0).toFixed(2)}`;
+                document.getElementById('active-trades-count').textContent = stats.trading_status?.active_trades || 0;
+                
+                const successRate = stats.total_trades > 0 ? 
+                    ((stats.successful_trades / stats.total_trades) * 100).toFixed(1) : 0;
+                document.getElementById('success-rate').textContent = `${successRate}%`;
+            }
+            
+            updateTradingStatus(tradingStatus) {
+                const indicator = document.getElementById('trading-status-indicator');
+                const text = document.getElementById('trading-status-text');
+                const enableBtn = document.getElementById('enable-trading-btn');
+                const disableBtn = document.getElementById('disable-trading-btn');
+                
+                if (tradingStatus.enabled) {
+                    indicator.className = 'w-3 h-3 rounded-full bg-green-500';
+                    text.textContent = 'Trading Enabled';
+                    text.className = 'text-sm text-green-400';
+                    enableBtn.disabled = true;
+                    disableBtn.disabled = false;
+                } else {
+                    indicator.className = 'w-3 h-3 rounded-full bg-red-500';
+                    text.textContent = 'Trading Disabled';
+                    text.className = 'text-sm text-red-400';
+                    enableBtn.disabled = false;
+                    disableBtn.disabled = true;
+                }
+                
+                document.getElementById('max-trade-amount').textContent = tradingStatus.max_trade_amount || 1000;
+                document.getElementById('daily-trade-limit').textContent = tradingStatus.daily_trade_limit || 10000;
             }
 
             updateExchanges(exchanges) {
@@ -469,12 +964,334 @@
                         this.ws.send('ping');
                     }
                 }, 30000);
+                
+                // Trading control buttons
+                document.getElementById('enable-trading-btn').addEventListener('click', async () => {
+                    try {
+                        const response = await fetch('/trading/enable', { method: 'POST' });
+                        if (response.ok) {
+                            const result = await response.json();
+                            console.log('Trading enabled:', result.message);
+                            // Refresh stats to update UI
+                            this.loadInitialData();
+                        } else {
+                            console.error('Failed to enable trading');
+                        }
+                    } catch (error) {
+                        console.error('Error enabling trading:', error);
+                    }
+                });
+                
+                document.getElementById('disable-trading-btn').addEventListener('click', async () => {
+                    try {
+                        const response = await fetch('/trading/disable', { method: 'POST' });
+                        if (response.ok) {
+                            const result = await response.json();
+                            console.log('Trading disabled:', result.message);
+                            // Refresh stats to update UI
+                            this.loadInitialData();
+                        } else {
+                            console.error('Failed to disable trading');
+                        }
+                    } catch (error) {
+                        console.error('Error disabling trading:', error);
+                    }
+                });
+            }
+            
+            updatePortfolioMetrics(metrics) {
+                document.getElementById('portfolio-value').textContent = `$${metrics.total_value_usdt.toFixed(2)}`;
+                document.getElementById('total-pnl').textContent = `$${metrics.total_pnl.toFixed(2)}`;
+                document.getElementById('daily-pnl').textContent = `$${metrics.daily_pnl.toFixed(2)}`;
+                document.getElementById('win-rate').textContent = `${metrics.win_rate.toFixed(1)}%`;
+                document.getElementById('sharpe-ratio').textContent = metrics.sharpe_ratio.toFixed(2);
+                document.getElementById('max-drawdown').textContent = `${metrics.max_drawdown.toFixed(1)}%`;
+                document.getElementById('open-positions').textContent = metrics.positions_count;
+                document.getElementById('portfolio-last-update').textContent = new Date(metrics.last_updated).toLocaleTimeString();
+            }
+            
+            updatePositions(positions) {
+                const container = document.getElementById('positions-container');
+                
+                if (positions.length === 0) {
+                    container.innerHTML = `
+                        <div class="text-center text-gray-400 py-8">
+                            <i class="fas fa-chart-bar text-4xl mb-4"></i>
+                            <p>No open positions</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                container.innerHTML = '';
+                positions.forEach(position => {
+                    const card = document.createElement('div');
+                    card.className = 'bg-gray-800 rounded-lg p-6 border border-gray-700';
+                    
+                    const pnlClass = position.unrealized_pnl >= 0 ? 'text-green-400' : 'text-red-400';
+                    
+                    card.innerHTML = `
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold">
+                                ${position.symbol} - ${position.exchange}
+                            </h3>
+                            <span class="px-3 py-1 bg-blue-900 text-blue-300 rounded-full text-sm">
+                                ${position.side.toUpperCase()}
+                            </span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <p class="text-gray-400 text-sm">Amount</p>
+                                <p class="font-bold">${position.amount.toFixed(4)}</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 text-sm">Entry Price</p>
+                                <p class="font-bold">$${position.entry_price.toFixed(4)}</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 text-sm">Current Price</p>
+                                <p class="font-bold">$${position.current_price.toFixed(4)}</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 text-sm">Unrealized P&L</p>
+                                <p class="font-bold ${pnlClass}">$${position.unrealized_pnl.toFixed(2)}</p>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center text-sm text-gray-400">
+                            <span>Opened: ${new Date(position.opened_at).toLocaleDateString()}</span>
+                            <button onclick="closePosition(${position.id}, ${position.current_price})" 
+                                    class="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700">
+                                Close Position
+                            </button>
+                        </div>
+                    `;
+                    
+                    container.appendChild(card);
+                });
+            }
+            
+            updateAnalytics(analytics) {
+                // Update main metrics
+                document.getElementById('analytics-total-return').textContent = `$${analytics.performance?.total_return?.toFixed(2) || '0.00'}`;
+                document.getElementById('analytics-sharpe-ratio').textContent = analytics.performance?.sharpe_ratio?.toFixed(2) || '0.00';
+                document.getElementById('analytics-win-rate').textContent = `${analytics.performance?.win_rate?.toFixed(1) || '0'}%`;
+                document.getElementById('analytics-max-drawdown').textContent = `${analytics.performance?.max_drawdown?.toFixed(1) || '0'}%`;
+                
+                // Update performance metrics
+                document.getElementById('analytics-annualized-return').textContent = `${analytics.performance?.annualized_return?.toFixed(2) || '0'}%`;
+                document.getElementById('analytics-volatility').textContent = `${analytics.performance?.volatility?.toFixed(2) || '0'}%`;
+                document.getElementById('analytics-profit-factor').textContent = analytics.performance?.profit_factor?.toFixed(2) || '0.00';
+                document.getElementById('analytics-sortino-ratio').textContent = analytics.performance?.sortino_ratio?.toFixed(2) || '0.00';
+                
+                // Update trading insights
+                document.getElementById('analytics-optimal-size').textContent = `$${analytics.insights?.optimal_trade_size?.toFixed(0) || '0'}`;
+                document.getElementById('analytics-best-hours').textContent = analytics.insights?.best_trading_hours?.join(', ') || 'N/A';
+                document.getElementById('analytics-timing-accuracy').textContent = `${analytics.insights?.market_timing_accuracy?.toFixed(1) || '0'}%`;
+                document.getElementById('analytics-risk-score').textContent = `${analytics.risk?.risk_score?.toFixed(0) || '0'}/100`;
+            }
+            
+            updateRiskMetrics(risk) {
+                // Update main risk metrics
+                document.getElementById('risk-score').textContent = risk.risk_score?.toFixed(2) || '0.00';
+                document.getElementById('current-exposure').textContent = `$${risk.current_exposure?.toFixed(2) || '0.00'}`;
+                document.getElementById('daily-pnl').textContent = `$${risk.daily_pnl?.toFixed(2) || '0.00'}`;
+                document.getElementById('safety-status').textContent = risk.safety_status || 'SAFE';
+                
+                // Update risk limits
+                document.getElementById('max-exposure').textContent = `$${risk.max_exposure?.toFixed(0) || '1000'}`;
+                document.getElementById('daily-loss-limit').textContent = `$${risk.daily_loss_limit?.toFixed(0) || '500'}`;
+                document.getElementById('max-drawdown-limit').textContent = `${(risk.max_drawdown_limit * 100)?.toFixed(0) || '10'}%`;
+                document.getElementById('volatility-limit').textContent = `${(risk.volatility_limit * 100)?.toFixed(0) || '5'}%`;
+                
+                // Update current metrics
+                document.getElementById('current-drawdown').textContent = `${(risk.max_drawdown * 100)?.toFixed(1) || '0'}%`;
+                document.getElementById('current-volatility').textContent = `${(risk.volatility * 100)?.toFixed(1) || '0'}%`;
+                document.getElementById('correlation-risk').textContent = `${(risk.correlation_risk * 100)?.toFixed(1) || '0'}%`;
+                
+                // Update safety status color
+                const safetyStatus = document.getElementById('safety-status');
+                switch(risk.safety_status) {
+                    case 'SAFE':
+                        safetyStatus.className = 'text-2xl font-bold text-green-400';
+                        break;
+                    case 'MEDIUM':
+                        safetyStatus.className = 'text-2xl font-bold text-yellow-400';
+                        break;
+                    case 'HIGH':
+                        safetyStatus.className = 'text-2xl font-bold text-orange-400';
+                        break;
+                    case 'CRITICAL':
+                        safetyStatus.className = 'text-2xl font-bold text-red-400';
+                        break;
+                    default:
+                        safetyStatus.className = 'text-2xl font-bold text-purple-400';
+                }
+            }
+        }
+
+        // Global function for executing trades
+        async function executeTrade(opportunityId) {
+            try {
+                const response = await fetch('/trading/execute', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ opportunity_id: opportunityId })
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log('Trade execution started:', result.message);
+                    
+                    // Show success message
+                    showNotification('Trade execution started!', 'success');
+                    
+                    // Refresh stats to update UI
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
+                } else {
+                    const error = await response.json();
+                    console.error('Failed to execute trade:', error.detail);
+                    showNotification(`Failed to execute trade: ${error.detail}`, 'error');
+                }
+            } catch (error) {
+                console.error('Error executing trade:', error);
+                showNotification('Error executing trade', 'error');
+            }
+        }
+        
+        // Notification system
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg z-50 ${
+                type === 'success' ? 'bg-green-600 text-white' :
+                type === 'error' ? 'bg-red-600 text-white' :
+                'bg-blue-600 text-white'
+            }`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 5000);
+        }
+
+        // Global function for emergency stop
+        async function emergencyStop() {
+            const reason = prompt("Enter reason for emergency stop:");
+            if (!reason) return;
+            
+            try {
+                const response = await fetch('/risk/emergency-stop', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ reason: reason })
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log('Emergency stop:', result.message);
+                    showNotification('Emergency stop activated!', 'error');
+                    
+                    // Refresh all data
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
+                } else {
+                    const error = await response.json();
+                    console.error('Failed to activate emergency stop:', error.detail);
+                    showNotification(`Failed to activate emergency stop: ${error.detail}`, 'error');
+                }
+            } catch (error) {
+                console.error('Error activating emergency stop:', error);
+                showNotification('Error activating emergency stop', 'error');
+            }
+        }
+
+        // Global function for safety check
+        async function performSafetyCheck() {
+            try {
+                const response = await fetch('/risk/safety-check');
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log('Safety check:', result);
+                    
+                    if (result.safe) {
+                        showNotification('All safety rules passed!', 'success');
+                    } else {
+                        showNotification(`Safety violations detected: ${result.violation_count}`, 'error');
+                        console.log('Violations:', result.violations);
+                    }
+                } else {
+                    console.error('Failed to perform safety check');
+                }
+            } catch (error) {
+                console.error('Error performing safety check:', error);
+            }
+        }
+
+        // Global function for viewing risk events
+        async function viewRiskEvents() {
+            try {
+                const response = await fetch('/risk/events');
+                if (response.ok) {
+                    const events = await response.json();
+                    console.log('Risk events:', events);
+                    
+                    // Create a simple modal to display events
+                    const modal = document.createElement('div');
+                    modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+                    modal.innerHTML = `
+                        <div class="bg-gray-800 rounded-lg p-6 max-w-4xl max-h-96 overflow-y-auto">
+                            <h3 class="text-xl font-bold mb-4">Risk Events</h3>
+                            <div class="space-y-2">
+                                ${events.map(event => `
+                                    <div class="bg-gray-700 rounded p-3">
+                                        <div class="flex justify-between items-start">
+                                            <div>
+                                                <div class="font-semibold">${event.event_type}</div>
+                                                <div class="text-sm text-gray-400">${new Date(event.timestamp).toLocaleString()}</div>
+                                                <div class="text-sm">${event.details.join(', ')}</div>
+                                            </div>
+                                            <span class="px-2 py-1 rounded text-xs ${
+                                                event.severity === 'critical' ? 'bg-red-600' :
+                                                event.severity === 'high' ? 'bg-orange-600' :
+                                                event.severity === 'medium' ? 'bg-yellow-600' :
+                                                'bg-blue-600'
+                                            }">${event.severity}</span>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <button onclick="this.parentElement.parentElement.remove()" 
+                                    class="mt-4 px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700">
+                                Close
+                            </button>
+                        </div>
+                    `;
+                    
+                    document.body.appendChild(modal);
+                } else {
+                    console.error('Failed to fetch risk events');
+                }
+            } catch (error) {
+                console.error('Error fetching risk events:', error);
             }
         }
 
         // Initialize the UI when the page loads
         document.addEventListener('DOMContentLoaded', () => {
             new MEVBotUI();
+            
+            // Add risk management event listeners
+            document.getElementById('safety-check-btn').addEventListener('click', performSafetyCheck);
+            document.getElementById('emergency-stop-btn').addEventListener('click', emergencyStop);
+            document.getElementById('risk-events-btn').addEventListener('click', viewRiskEvents);
         });
     </script>
 </body>

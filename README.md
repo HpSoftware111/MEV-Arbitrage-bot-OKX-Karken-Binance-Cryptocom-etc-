@@ -1,233 +1,198 @@
-# MEV Bot - XRP Price Monitor
+# MEV Arbitrage Bot
 
-A FastAPI-based real-time XRP price monitoring system that tracks prices across multiple exchanges and detects arbitrage opportunities.
+A sophisticated cryptocurrency arbitrage bot that monitors multiple exchanges for profitable trading opportunities.
 
-## Features
+## 🚀 Features
 
-- **Real-time Price Monitoring**: Tracks XRP prices across OKX, Kraken, Binance, and Crypto.com
-- **Arbitrage Detection**: Automatically detects profitable arbitrage opportunities
-- **REST API**: FastAPI-based API for accessing price data and opportunities
-- **SQLite Database**: Stores historical price data and arbitrage opportunities
-- **Exchange Authentication**: Supports API authentication for all major exchanges
+- **Multi-Exchange Support**: Kraken, Binance.US, OKX, Crypto.com
+- **Real-Time Monitoring**: Live price tracking and arbitrage detection
+- **Risk Management**: Comprehensive risk controls and safety features
+- **Portfolio Management**: Balance tracking and position management
+- **Advanced Analytics**: Historical data analysis and performance metrics
+- **Web Dashboard**: Real-time UI with WebSocket updates
+- **Paper Trading**: Safe testing mode before live trading
 
-## Exchanges Supported
+## 📋 Prerequisites
 
-- **Kraken** - Primary exchange with reliable API
-- **OKX** - Global exchange with good liquidity
-- **Binance** - Largest exchange (may be geo-restricted)
-- **Crypto.com** - Popular exchange with competitive fees
+- Python 3.8+
+- API keys from supported exchanges
+- Internet connection
 
-## Installation
+## 🛠️ Installation
 
-1. **Clone the repository**
+1. **Clone the repository**:
+   ```bash
+   git clone <repository-url>
+   cd mev-bot
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Configure API keys**:
+   ```bash
+   cp config.example .env
+   # Edit .env with your API keys
+   ```
+
+4. **Run the bot**:
+   ```bash
+   python main.py
+   ```
+
+5. **Access the dashboard**:
+   Open http://localhost:8001 in your browser
+
+## ⚙️ Configuration
+
+### Exchange Setup
+
+**Kraken**:
+- Create API key with "Query Funds" permission
+- No IP whitelist required
+
+**Binance.US** (US users only):
+- Create API key with "Spot Trading" permission
+- Enable IP whitelist if required
+
+**OKX**:
+- Create API key with "Read" and "Trade" permissions
+- Note your passphrase
+
+**Crypto.com**:
+- Create API key with "Balance" permission
+- Configure IP whitelist if required
+
+### Bot Settings
+
+- `TRADING_MODE`: `paper` (testing) or `live` (real trading)
+- `MIN_PROFIT_THRESHOLD`: Minimum profit percentage (0.005 = 0.005%)
+- `MAX_TRADE_AMOUNT`: Maximum trade size in USDT
+- `MIN_VOLUME_THRESHOLD`: Minimum volume requirement
+
+## 📊 Usage
+
+### Starting the Bot
+
 ```bash
-git clone <repository-url>
-cd mev-bot
+python main.py
 ```
 
-2. **Install dependencies**
+The bot will:
+- Connect to all configured exchanges
+- Start monitoring XRP prices
+- Detect arbitrage opportunities
+- Update the web dashboard in real-time
+
+### Web Dashboard
+
+Access http://localhost:8001 to view:
+- **Live Prices**: Current XRP prices from all exchanges
+- **Arbitrage Opportunities**: Detected profitable trades
+- **Current Balances**: Your account balances
+- **Risk Management**: Safety metrics and controls
+- **Analytics**: Performance statistics
+
+### 2-Hour Test Mode
+
+For comprehensive testing:
 ```bash
-pip install -r requirements.txt
+python 2hour_test.py
 ```
 
-3. **Set up environment variables**
-```bash
-cp env_example.txt .env
-# Edit .env with your API credentials
-```
+This will:
+- Monitor for 2 hours continuously
+- Use ultra-low threshold (0.005%)
+- Log all opportunities found
+- Save detailed results
 
-4. **Configure API Keys**
-Edit the `.env` file with your exchange API credentials:
-```env
-KRAKEN_API_KEY=your_kraken_api_key_here
-KRAKEN_API_SECRET=your_kraken_api_secret_here
-
-OKX_API_KEY=your_okx_api_key_here
-OKX_API_SECRET=your_okx_api_secret_here
-OKX_PASSPHRASE=your_okx_passphrase_here
-
-BINANCE_API_KEY=your_binance_api_key_here
-BINANCE_API_SECRET=your_binance_api_secret_here
-
-CRYPTO_COM_API_KEY=your_crypto_com_api_key_here
-CRYPTO_COM_API_SECRET=your_crypto_com_api_secret_here
-```
-
-## Usage
-
-### Start the Bot
-```bash
-python start.py
-```
-
-The bot will start on `http://localhost:8000`
-
-### API Endpoints
-
-#### Get Current Prices
-```bash
-GET /prices
-```
-
-#### Get Arbitrage Opportunities
-```bash
-GET /arbitrage/opportunities?limit=10&min_profit=0.1
-```
-
-#### Get Live Arbitrage Opportunities
-```bash
-GET /arbitrage/opportunities/live
-```
-
-#### Get Exchange Status
-```bash
-GET /exchanges/status
-```
-
-#### Get Statistics
-```bash
-GET /stats
-```
-
-#### Control Monitoring
-```bash
-POST /monitor/start
-POST /monitor/stop
-```
-
-### Example API Response
-
-#### Current Prices
-```json
-[
-  {
-    "exchange": "kraken",
-    "symbol": "XRP/USDT",
-    "bid_price": 2.6047,
-    "ask_price": 2.6048,
-    "last_price": 2.6047,
-    "volume": 1234567.89,
-    "timestamp": "2024-01-15T10:30:00Z"
-  }
-]
-```
-
-#### Arbitrage Opportunities
-```json
-[
-  {
-    "id": 1,
-    "symbol": "XRP/USDT",
-    "buy_exchange": "kraken",
-    "sell_exchange": "okx",
-    "buy_price": 2.6047,
-    "sell_price": 2.6052,
-    "profit_amount": 0.0005,
-    "profit_percentage": 0.019,
-    "volume": 1000.0,
-    "timestamp": "2024-01-15T10:30:00Z",
-    "is_executed": false
-  }
-]
-```
-
-## Database Schema
-
-### PriceData Table
-- `id`: Primary key
-- `exchange`: Exchange name
-- `symbol`: Trading pair (XRP/USDT)
-- `bid_price`: Best bid price
-- `ask_price`: Best ask price
-- `last_price`: Last traded price
-- `volume`: 24h volume
-- `timestamp`: Price timestamp
-
-### ArbitrageOpportunity Table
-- `id`: Primary key
-- `symbol`: Trading pair
-- `buy_exchange`: Exchange to buy from
-- `sell_exchange`: Exchange to sell to
-- `buy_price`: Buy price
-- `sell_price`: Sell price
-- `profit_amount`: Profit in USDT
-- `profit_percentage`: Profit percentage
-- `volume`: Available volume
-- `timestamp`: Opportunity timestamp
-- `is_executed`: Execution status
-
-## Configuration
-
-### Environment Variables
-- `DATABASE_URL`: SQLite database URL
-- `DEBUG`: Debug mode (True/False)
-- `LOG_LEVEL`: Logging level (INFO, DEBUG, etc.)
-
-### Exchange API Setup
-1. **Kraken**: https://www.kraken.com/u/security/api
-2. **OKX**: https://www.okx.com/account/my-api
-3. **Binance**: https://www.binance.com/en/my/settings/api-management
-4. **Crypto.com**: https://crypto.com/exchange/user/settings/api
-
-## Monitoring
-
-The bot monitors XRP prices every second and:
-1. Fetches current prices from all exchanges
-2. Stores price data in SQLite database
-3. Calculates arbitrage opportunities
-4. Stores profitable opportunities (>0.1%)
-
-## API Documentation
-
-Once the bot is running, visit:
-- **Swagger UI**: http://localhost:8000/docs
-- **ReDoc**: http://localhost:8000/redoc
-
-## Troubleshooting
+## 🔧 Troubleshooting
 
 ### Common Issues
 
-1. **Exchange API Errors**
-   - Check API credentials in `.env` file
-   - Verify API permissions (read-only for monitoring)
-   - Check if exchange is geo-restricted
+**Authentication Errors**:
+- Verify API keys are correct
+- Check API key permissions
+- Ensure IP whitelist is configured
 
-2. **Database Errors**
-   - Ensure SQLite database file is writable
-   - Check database permissions
+**Geo-Restrictions**:
+- Binance.US is US-only
+- Use VPN if needed
+- Bot will use demo mode automatically
 
-3. **No Price Data**
-   - Verify internet connection
-   - Check exchange API status
-   - Review logs for error messages
+**No Arbitrage Opportunities**:
+- Market may be very efficient
+- Lower `MIN_PROFIT_THRESHOLD`
+- Monitor during high volatility periods
 
-### Logs
-Check the console output for detailed logs and error messages.
+### Exchange Status
 
-## Development
+- **Kraken**: ✅ Working
+- **Binance.US**: ⚠️ Geo-restricted (demo mode)
+- **OKX**: ⚠️ Requires API key
+- **Crypto.com**: ⚠️ Check authentication
 
-### Project Structure
+## 📈 Performance
+
+### Expected Results
+
+- **Normal Market**: 0-5 opportunities per hour
+- **Volatile Market**: 5-20 opportunities per hour
+- **High Volatility**: 20+ opportunities per hour
+
+### Best Times to Monitor
+
+- **Market Open**: 9:30 AM EST
+- **Market Close**: 4:00 PM EST
+- **News Events**: Economic announcements
+- **Weekend**: Lower liquidity periods
+
+## 🛡️ Safety Features
+
+- **Paper Trading Mode**: Test without real money
+- **Risk Management**: Stop-loss and position sizing
+- **Daily Limits**: Maximum trade amounts
+- **Emergency Stop**: Instant trading halt
+- **Balance Monitoring**: Real-time account tracking
+
+## 📁 Project Structure
+
 ```
 mev-bot/
-├── main.py              # FastAPI application
-├── start.py             # Startup script
-├── database.py          # Database models and configuration
-├── exchanges.py         # Exchange API management
-├── price_monitor.py     # Price monitoring service
-├── requirements.txt     # Python dependencies
-├── env_example.txt      # Environment variables template
+├── main.py                 # Main application
+├── exchanges.py           # Exchange integrations
+├── price_monitor.py      # Price monitoring
+├── trading_executor.py   # Trade execution
+├── portfolio_manager.py  # Portfolio management
+├── analytics_engine.py   # Analytics and metrics
+├── risk_manager.py       # Risk management
+├── database.py           # Database models
+├── templates/            # Web UI templates
+├── static/              # Static assets
+├── requirements.txt     # Dependencies
+├── config.example       # Configuration template
 └── README.md           # This file
 ```
 
-### Adding New Exchanges
-1. Add exchange configuration in `exchanges.py`
-2. Update `price_monitor.py` to include new exchange
-3. Add API credentials to `.env` file
+## 🤝 Contributing
 
-## License
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
 
-This project is for educational purposes. Use at your own risk.
+## ⚠️ Disclaimer
 
-## Disclaimer
+This bot is for educational purposes. Cryptocurrency trading involves significant risk. Always:
+- Test in paper mode first
+- Start with small amounts
+- Monitor your positions
+- Understand the risks
+- Never invest more than you can afford to lose
 
-Cryptocurrency trading involves substantial risk. This bot is for monitoring purposes only. Always do your own research and never invest more than you can afford to lose.
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
